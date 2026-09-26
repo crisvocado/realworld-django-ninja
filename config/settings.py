@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "helpers.logcore.LogcoreMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -152,4 +153,37 @@ AUTH_USER_MODEL = "accounts.User"
 JWT_NINJA = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
+}
+
+
+# Logging configuration
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "logcore": {
+            "class": "helpers.logcore.LogcoreHandler",
+            "level": "ERROR",
+        },
+        "console": {
+            "class": "logging.StreamHandler",
+            "level": "INFO" if DEBUG else "WARNING",
+        },
+    },
+    "root": {
+        "handlers": ["console", "logcore"],
+        "level": "INFO" if DEBUG else "WARNING",
+    },
+    "loggers": {
+        "django": {
+            "handlers": ["console", "logcore"],
+            "level": "INFO",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console", "logcore"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+    },
 }
