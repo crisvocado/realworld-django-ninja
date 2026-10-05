@@ -11,6 +11,9 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+from logcore_adapter import install as install_logcore
+
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "config.settings")
+install_logcore()
 
 application = get_wsgi_application()

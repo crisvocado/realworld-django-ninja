@@ -12,6 +12,8 @@ from os import getenv
 from pathlib import Path
 from urllib.parse import urlparse
 
+from logcore_adapter import install as install_logcore
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(BASE_DIR / "apps"))  # Also allow direct loading of the content in apps
@@ -153,3 +155,6 @@ JWT_NINJA = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=7),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=7),
 }
+
+LOGGING = {"version": 1, "disable_existing_loggers": False}
+install_logcore()
